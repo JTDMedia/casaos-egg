@@ -16,7 +16,7 @@
     "startup": "sh \/home\/container\/start.sh",
     "config": {
         "files": "{}",
-        "startup": "{\r\n\"done\": \"\"\r\n}",
+        "startup": "{\r\n    \"done\": \"Container is running\"\r\n}",
         "logs": "{}",
         "stop": "^C"
     },
