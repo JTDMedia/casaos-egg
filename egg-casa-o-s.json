@@ -1,0 +1,31 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY Jexactyl PANEL - jexactyl.com",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2025-05-23T12:30:09+02:00",
+    "name": "CasaOS",
+    "author": "justthedev@bingebit.online",
+    "description": "Run CasaOS on a Pterodactyl Hosting inside a container",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/dockur\/casa:0.4.15": "ghcr.io\/dockur\/casa:0.4.15"
+    },
+    "file_denylist": [],
+    "startup": "sh \/home\/container\/start.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n\"done\": \"\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/ash\r\n\r\n# Set working directory\r\ncd \/mnt\/server || { echo \"Failed to change directory to \/mnt\/server\"; exit 1; }\r\n\r\n# Install required packages\r\napk --update add git unzip curl || { echo \"Failed to install Git and required packages\"; exit 1; }\r\n\r\n# Clone the repository containing nginx and php configurations\r\nif git clone https:\/\/github.com\/JTDMedia\/casaos-egg .\/temp; then\r\n    # Copy contents from temp to \/mnt\/server (excluding the temp folder itself)\r\n    cp -r .\/temp\/* \/mnt\/server\/\r\n    # Copy start.sh and make executable\r\n    chmod +x \/mnt\/server\/start.sh\r\n    # Clean up\r\n    rm -rf .\/temp\r\nelse\r\n    echo \"Failed to clone repository\"; exit 1\r\nfi\r\n\r\n# Install Docker CLI or docker.io package depending on environment\r\nif ! apk add --no-cache docker-cli 2>\/dev\/null; then\r\n    # If apk fails, try apt-get (Debian-based systems)\r\n    apt-get update && apt-get install -y docker.io || { echo \"Failed to install Docker\"; exit 1; }\r\nfi\r\n\r\necho \"Installation complete.\"",
+            "container": "alpine:latest",
+            "entrypoint": "ash"
+        }
+    },
+    "variables": []
+}
