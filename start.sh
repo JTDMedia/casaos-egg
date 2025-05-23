@@ -7,6 +7,7 @@ docker run -d \
   --name casa \
   -p ${SERVER_PORT}:80 \
   -v casa_data:/mnt/server/casa/data \
+  --entrypoint /bin/bash \
   dockur/casa
 
 echo "Container is running"
